@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Placeholders - Detail Suds</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0A0A0A;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #D4AF37;
+            margin-bottom: 1rem;
+        }
+        
+        .intro {
+            background: #111;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 2rem;
+        }
+        
+        .placeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .placeholder-card {
+            background: #111;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .placeholder-card:hover {
+            transform: translateY(-4px);
+            border-color: #D4AF37;
+        }
+        
+        .placeholder-img {
+            width: 100%;
+            aspect-ratio: var(--aspect-ratio);
+            background: linear-gradient(135deg, #1A1A1A 0%, #0A0A0A 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .placeholder-img svg {
+            width: 64px;
+            height: 64px;
+            opacity: 0.3;
+        }
+        
+        .dimensions {
+            font-family: 'Courier New', monospace;
+            color: #D4AF37;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        
+        .aspect {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        .placeholder-info {
+            padding: 1.5rem;
+        }
+        
+        .placeholder-info h3 {
+            color: #D4AF37;
+            margin-bottom: 0.5rem;
+        }
+        
+        .placeholder-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .specs {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .specs strong {
+            color: white;
+        }
+        
+        .priority {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        .priority.critical {
+            background: rgba(255, 59, 48, 0.2);
+            color: #FF3B30;
+            border: 1px solid #FF3B30;
+        }
+        
+        .priority.high {
+            background: rgba(255, 204, 0, 0.2);
+            color: #FFCC00;
+            border: 1px solid #FFCC00;
+        }
+        
+        .priority.medium {
+            background: rgba(52, 199, 89, 0.2);
+            color: #34C759;
+            border: 1px solid #34C759;
+        }
+        
+        .tools {
+            background: #111;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .tools h2 {
+            color: #D4AF37;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .tool-card {
+            background: #0A0A0A;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tool-card h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .tool-card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-card a {
+            display: inline-block;
+            background: #D4AF37;
+            color: #0A0A0A;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .tool-card a:hover {
+            background: #B8960F;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📸 Image Placeholders Guide</h1>
+        
+        <div class="intro">
+            <h2 style="color: white; margin-bottom: 1rem;">Quick Start</h2>
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 1rem;">
+                Your website is fully functional and ready to launch. It just needs 6 images to complete the visual experience. 
+                Replace these placeholder references with your actual images in the <code style="background: #0A0A0A; padding: 0.2rem 0.5rem; border-radius: 4px;">/assets/</code> folder.
+            </p>
+            <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">
+                💡 Tip: Use high-quality photos showing your detailing work, clean cars, and premium finishes. 
+                Good images = high perceived value = more bookings!
+            </p>
+        </div>
+
+        <div class="placeholder-grid">
+            <!-- Hero Image -->
+            <div class="placeholder-card">
+                <div class="placeholder-img" style="--aspect-ratio: 600/700;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <div class="dimensions">600 × 700 px</div>
+                    <div class="aspect">Portrait (6:7)</div>
+                </div>
+                <div class="placeholder-info">
+                    <h3>hero-detailing.webp</h3>
+                    <p>Main hero section image. Show a premium car being detailed or ceramic coated. Should look professional and luxurious.</p>
+                    <div class="specs">
+                        <strong>Usage:</strong>
+                        <span>Hero section, right panel</span>
+                        <strong>Quality:</strong>
+                        <span>70-80% WebP compression</span>
+                        <strong>Max Size:</strong>
+                        <span>150 KB</span>
+                        <strong>Loading:</strong>
+                        <span>Eager (fast LCP)</span>
+                    </div>
+                    <span class="priority critical">🔴 Critical</span>
+                </div>
+            </div>
+
+            <!-- Showcase 1 -->
+            <div class="placeholder-card">
+                <div class="placeholder-img" style="--aspect-ratio: 16/9;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <div class="dimensions">1200 × 675 px</div>
+                    <div class="aspect">Landscape (16:9)</div>
+                </div>
+                <div class="placeholder-info">
+                    <h3>showcase-1-before.webp</h3>
+                    <p>Ceramic coating showcase. Before/after or application process shot. Highlight the gloss and protection.</p>
+                    <div class="specs">
+                        <strong>Usage:</strong>
+                        <span>Showcase carousel, slide 1</span>
+                        <strong>Quality:</strong>
+                        <span>70-80% WebP compression</span>
+                        <strong>Max Size:</strong>
+                        <span>200 KB</span>
+                        <strong>Loading:</strong>
+                        <span>Lazy (below fold)</span>
+                    </div>
+                    <span class="priority high">🟡 High Priority</span>
+                </div>
+            </div>
+
+            <!-- Showcase 2 -->
+            <div class="placeholder-card">
+                <div class="placeholder-img" style="--aspect-ratio: 16/9;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <div class="dimensions">1200 × 675 px</div>
+                    <div class="aspect">Landscape (16:9)</div>
+                </div>
+                <div class="placeholder-info">
+                    <h3>showcase-2-before.webp</h3>
+                    <p>PPF installation showcase. Show the film application or the protected finish on a luxury car.</p>
+                    <div class="specs">
+                        <strong>Usage:</strong>
+                        <span>Showcase carousel, slide 2</span>
+                        <strong>Quality:</strong>
+                        <span>70-80% WebP compression</span>
+                        <strong>Max Size:</strong>
+                        <span>200 KB</span>
+                        <strong>Loading:</strong>
+                        <span>Lazy (below fold)</span>
+                    </div>
+                    <span class="priority high">🟡 High Priority</span>
+                </div>
+            </div>
+
+            <!-- Showcase 3 -->
+            <div class="placeholder-card">
+                <div class="placeholder-img" style="--aspect-ratio: 16/9;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <div class="dimensions">1200 × 675 px</div>
+                    <div class="aspect">Landscape (16:9)</div>
+                </div>
+                <div class="placeholder-info">
+                    <h3>showcase-3-before.webp</h3>
+                    <p>Paint enhancement/correction. Show the mirror-like finish after correction or the detailed swirl removal.</p>
+                    <div class="specs">
+                        <strong>Usage:</strong>
+                        <span>Showcase carousel, slide 3</span>
+                        <strong>Quality:</strong>
+                        <span>70-80% WebP compression</span>
+                        <strong>Max Size:</strong>
+                        <span>200 KB</span>
+                        <strong>Loading:</strong>
+                        <span>Lazy (below fold)</span>
+                    </div>
+                    <span class="priority medium">🟢 Medium Priority</span>
+                </div>
+            </div>
+
+            <!-- Showcase 4 -->
+            <div class="placeholder-card">
+                <div class="placeholder-img" style="--aspect-ratio: 16/9;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <div class="dimensions">1200 × 675 px</div>
+                    <div class="aspect">Landscape (16:9)</div>
+                </div>
+                <div class="placeholder-info">
+                    <h3>showcase-4-before.webp</h3>
+                    <p>Interior deep clean transformation. Show pristine seats, dashboard, or before/after interior shots.</p>
+                    <div class="specs">
+                        <strong>Usage:</strong>
+                        <span>Showcase carousel, slide 4</span>
+                        <strong>Quality:</strong>
+                        <span>70-80% WebP compression</span>
+                        <strong>Max Size:</strong>
+                        <span>200 KB</span>
+                        <strong>Loading:</strong>
+                        <span>Lazy (below fold)</span>
+                    </div>
+                    <span class="priority medium">🟢 Medium Priority</span>
+                </div>
+            </div>
+
+            <!-- Social Preview -->
+            <div class="placeholder-card">
+                <div class="placeholder-img" style="--aspect-ratio: 1.9/1;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <div class="dimensions">1200 × 630 px</div>
+                    <div class="aspect">Open Graph (1.9:1)</div>
+                </div>
+                <div class="placeholder-info">
+                    <h3>detail-suds-hero.webp</h3>
+                    <p>Social media preview image. This appears when the site is shared on Facebook, Twitter, LinkedIn. Include logo and tagline.</p>
+                    <div class="specs">
+                        <strong>Usage:</strong>
+                        <span>Open Graph meta tags</span>
+                        <strong>Quality:</strong>
+                        <span>85-90% WebP compression</span>
+                        <strong>Max Size:</strong>
+                        <span>250 KB</span>
+                        <strong>Loading:</strong>
+                        <span>N/A (meta tag only)</span>
+                    </div>
+                    <span class="priority medium">🟢 Medium Priority</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tools">
+            <h2>🛠️ Recommended Tools</h2>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <h3>Squoosh</h3>
+                    <p>Browser-based image optimizer. Best for WebP conversion with visual quality comparison.</p>
+                    <a href="https://squoosh.app/" target="_blank">Open Squoosh →</a>
+                </div>
+
+                <div class="tool-card">
+                    <h3>TinyPNG</h3>
+                    <p>Batch compression tool. Upload multiple images at once. Excellent compression ratio.</p>
+                    <a href="https://tinypng.com/" target="_blank">Open TinyPNG →</a>
+                </div>
+
+                <div class="tool-card">
+                    <h3>Canva</h3>
+                    <p>Create the Open Graph social preview image with text overlay and logo.</p>
+                    <a href="https://www.canva.com/" target="_blank">Open Canva →</a>
+                </div>
+
+                <div class="tool-card">
+                    <h3>Unsplash</h3>
+                    <p>Free high-quality stock photos. Search "car detailing" or "luxury car" for temporary placeholders.</p>
+                    <a href="https://unsplash.com/s/photos/car-detailing" target="_blank">Browse Unsplash →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
